@@ -1,7 +1,7 @@
 package ticTacToe;
 
 public enum Piece {
-    X (" X "), O (" O "), EMPTY ("   ");
+    X ("X"), O ("O"), EMPTY (" ");
 
     private String name;
 
