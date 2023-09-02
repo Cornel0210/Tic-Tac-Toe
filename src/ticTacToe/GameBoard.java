@@ -8,14 +8,18 @@ public class GameBoard {
         loadBoard();
     }
 
-    public GameBoard(Piece[][] board) {
-        this.board = board;
-        loadBoard();
-    }
-
     public GameBoard(int dimension) {
         this.board = new Piece[dimension][dimension];
         loadBoard();
+    }
+
+    private GameBoard(GameBoard gameBoard){
+        this.board = new Piece[gameBoard.board.length][gameBoard.board[0].length];
+        for (int i = 0; i < this.board.length; i++) {
+            for (int j = 0; j < this.board[0].length; j++) {
+                board[i][j] = gameBoard.board[i][j];
+            }
+        }
     }
 
     private void loadBoard(){
@@ -37,6 +41,32 @@ public class GameBoard {
             return true;
         }
         return false;
+    }
+    public boolean isAWin(Position position, Piece piece){
+        int countLength = 0;
+        int countHeight = 0;
+        for (int i = 0; i < board.length; i++) { //checks the line and the column;
+            if (board[position.getX()][i] == piece){
+                countLength++;
+            }
+            if (board[i][position.getY()] == piece){
+                countHeight++;
+            }
+        }
+        if (countLength == board.length || countHeight == board.length){
+            return true;
+        }
+        countLength = 0;
+        countHeight = 0;
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][i] == piece){
+                countLength++;
+            }
+            if (board[board.length-1-i][i] == piece){
+                countHeight++;
+            }
+        }
+        return countLength == board.length || countHeight == board.length;
     }
 
     private boolean isValid(Position position){
@@ -65,5 +95,9 @@ public class GameBoard {
             stringBuilder.append("\n");
         }
         System.out.println(stringBuilder);
+    }
+
+    public GameBoard clone(){
+        return new GameBoard(this);
     }
 }
