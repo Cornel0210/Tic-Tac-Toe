@@ -1,16 +1,27 @@
 package ticTacToe;
 
-public enum Position {
-    X (" X "), O (" O "), EMPTY ("   ");
+public class Position {
+    private int x;
+    private int y;
 
-    private String name;
-
-    Position(String name) {
-        this.name = name;
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    @Override
-    public String toString() {
-        return this.name;
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
