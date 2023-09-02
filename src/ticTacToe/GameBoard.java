@@ -1,5 +1,8 @@
 package ticTacToe;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class GameBoard {
     private Piece[][] board;
 
@@ -58,7 +61,7 @@ public class GameBoard {
         }
         countLength = 0;
         countHeight = 0;
-        for (int i = 0; i < board.length; i++) {
+        for (int i = 0; i < board.length; i++) { //checks the diagonals;
             if (board[i][i] == piece){
                 countLength++;
             }
@@ -67,6 +70,18 @@ public class GameBoard {
             }
         }
         return countLength == board.length || countHeight == board.length;
+    }
+
+    public List<Position> getFreePos(){
+        List<Position> freePos = new LinkedList<>();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == Piece.EMPTY){
+                   freePos.add(new Position(i,j));
+                }
+            }
+        }
+        return freePos;
     }
 
     private boolean isValid(Position position){
