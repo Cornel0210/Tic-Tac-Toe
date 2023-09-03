@@ -45,31 +45,43 @@ public class GameBoard {
         }
         return false;
     }
-    public boolean isAWin(Position position, Piece piece){
-        int countLength = 0;
-        int countHeight = 0;
-        for (int i = 0; i < board.length; i++) { //checks the line and the column;
-            if (board[position.getX()][i] == piece){
-                countLength++;
+    public boolean isAWin(Piece sign){
+        int count;
+        for (int i = 0; i < board.length; i++) { //checks the lines
+            count = 0;
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == sign){
+                    count ++;
+                }
             }
-            if (board[i][position.getY()] == piece){
-                countHeight++;
-            }
-        }
-        if (countLength == board.length || countHeight == board.length){
-            return true;
-        }
-        countLength = 0;
-        countHeight = 0;
-        for (int i = 0; i < board.length; i++) { //checks the diagonals;
-            if (board[i][i] == piece){
-                countLength++;
-            }
-            if (board[board.length-1-i][i] == piece){
-                countHeight++;
+            if (count == board.length){
+                return true;
             }
         }
-        return countLength == board.length || countHeight == board.length;
+
+        for (int j = 0; j < board.length; j++) { //checks the columns
+            count = 0;
+            for (int i = 0; i < board.length; i++) {
+                if (board[i][j] == sign) {
+                    count++;
+                }
+            }
+            if (count == board.length){
+                return true;
+            }
+        }
+
+        count = 0;
+        int diag2 = 0;
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][i] == sign){
+                count++;
+            }
+            if (board[board.length-1-i][i] == sign){
+                diag2++;
+            }
+        }
+        return diag2 == board.length || count == board.length;
     }
 
     public List<Position> getFreePos(){
@@ -93,7 +105,9 @@ public class GameBoard {
         }
         return true;
     }
-    public void printBoard(){
+
+    @Override
+    public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("   ");
         for (int i = 0; i < this.board[0].length; i++) {
@@ -109,7 +123,7 @@ public class GameBoard {
             stringBuilder.replace(stringBuilder.length()-1, stringBuilder.length(), "");
             stringBuilder.append("\n");
         }
-        System.out.println(stringBuilder);
+        return stringBuilder.toString();
     }
 
     public GameBoard clone(){

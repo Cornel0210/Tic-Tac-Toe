@@ -1,6 +1,7 @@
 package ticTacToe;
 
 public class Game {
+    private static Game INSTANCE;
     private GameBoard gameBoard;
     private Player player1;
     private Player player2;
@@ -8,12 +9,13 @@ public class Game {
 
     public Game() {
         gameBoard = new GameBoard();
+        //player1 = new AI_Player("ai", Piece.X);
         player1 = new HumanPlayer();
-        player2 = new HumanPlayer("AI", Piece.O);
+        player2 = new AI_Player();
     }
 
     public void run(){
-        gameBoard.printBoard();
+        System.out.println(gameBoard);
         while (!gameBoard.getFreePos().isEmpty()){
             Player current = isX ? player1 : player2;
             System.out.println("Time for " + current.getName() + " to move.");
@@ -21,12 +23,29 @@ public class Game {
             while (!gameBoard.put(pos, current.getSign())){
                 pos = current.move();
             }
-            if (gameBoard.isAWin(pos, current.getSign())){
+            System.out.println(gameBoard);
+            if (gameBoard.isAWin(current.getSign())){
                 System.out.println("Congratulations! " +  current.getName() + " has won!");
                 break;
+            } else if (gameBoard.getFreePos().isEmpty()){
+                System.out.println("It is a draw! Seems that it was a tough game!");
             }
             isX = !isX;
-            gameBoard.printBoard();
         }
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public static Game getInstance() {
+        if (INSTANCE == null){
+            INSTANCE = new Game();
+        }
+        return INSTANCE;
+    }
+
+    public boolean isX() {
+        return isX;
     }
 }
