@@ -2,9 +2,9 @@ package ticTacToe;
 
 public class Game {
     private static Game INSTANCE;
-    private GameBoard gameBoard;
-    private Player player1;
-    private Player player2;
+    private final GameBoard gameBoard;
+    private final Player player1;
+    private final Player player2;
     private boolean isX = true;
 
     public Game() {

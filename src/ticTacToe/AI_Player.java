@@ -1,7 +1,5 @@
 package ticTacToe;
 
-import javafx.geometry.Pos;
-
 import java.util.List;
 
 public class AI_Player extends Player{

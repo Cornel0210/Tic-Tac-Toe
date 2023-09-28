@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GameBoard {
-    private Piece[][] board;
+    private final Piece[][] board;
 
     public GameBoard() {
         board = new Piece[3][3];
@@ -19,9 +19,7 @@ public class GameBoard {
     private GameBoard(GameBoard gameBoard){
         this.board = new Piece[gameBoard.board.length][gameBoard.board[0].length];
         for (int i = 0; i < this.board.length; i++) {
-            for (int j = 0; j < this.board[0].length; j++) {
-                board[i][j] = gameBoard.board[i][j];
-            }
+            System.arraycopy(gameBoard.board[i], 0, board[i], 0, this.board[0].length);
         }
     }
 
@@ -99,11 +97,8 @@ public class GameBoard {
     private boolean isValid(Position position){
         int x = position.getX();
         int y = position.getY();
-        if (x<0 || x >= board.length ||
-                y<0 || y >= board[0].length){
-            return false;
-        }
-        return true;
+        return x >= 0 && x < board.length &&
+                y >= 0 && y < board[0].length;
     }
 
     @Override
